@@ -64,6 +64,15 @@ namespace AstroPlayer.FinalCharacterController
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Collect"",
+                    ""type"": ""Button"",
+                    ""id"": ""1db2c05f-3cd1-4cd4-b970-7b826f16e596"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -154,6 +163,17 @@ namespace AstroPlayer.FinalCharacterController
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b17716cb-7068-40a9-986a-9252846050bb"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Collect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -166,6 +186,7 @@ namespace AstroPlayer.FinalCharacterController
             m_PlayerLocomotionMap_Look = m_PlayerLocomotionMap.FindAction("Look", throwIfNotFound: true);
             m_PlayerLocomotionMap_ToggleSprint = m_PlayerLocomotionMap.FindAction("ToggleSprint", throwIfNotFound: true);
             m_PlayerLocomotionMap_Jump = m_PlayerLocomotionMap.FindAction("Jump", throwIfNotFound: true);
+            m_PlayerLocomotionMap_Collect = m_PlayerLocomotionMap.FindAction("Collect", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -231,6 +252,7 @@ namespace AstroPlayer.FinalCharacterController
         private readonly InputAction m_PlayerLocomotionMap_Look;
         private readonly InputAction m_PlayerLocomotionMap_ToggleSprint;
         private readonly InputAction m_PlayerLocomotionMap_Jump;
+        private readonly InputAction m_PlayerLocomotionMap_Collect;
         public struct PlayerLocomotionMapActions
         {
             private @PlayerControls m_Wrapper;
@@ -239,6 +261,7 @@ namespace AstroPlayer.FinalCharacterController
             public InputAction @Look => m_Wrapper.m_PlayerLocomotionMap_Look;
             public InputAction @ToggleSprint => m_Wrapper.m_PlayerLocomotionMap_ToggleSprint;
             public InputAction @Jump => m_Wrapper.m_PlayerLocomotionMap_Jump;
+            public InputAction @Collect => m_Wrapper.m_PlayerLocomotionMap_Collect;
             public InputActionMap Get() { return m_Wrapper.m_PlayerLocomotionMap; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -260,6 +283,9 @@ namespace AstroPlayer.FinalCharacterController
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @Collect.started += instance.OnCollect;
+                @Collect.performed += instance.OnCollect;
+                @Collect.canceled += instance.OnCollect;
             }
 
             private void UnregisterCallbacks(IPlayerLocomotionMapActions instance)
@@ -276,6 +302,9 @@ namespace AstroPlayer.FinalCharacterController
                 @Jump.started -= instance.OnJump;
                 @Jump.performed -= instance.OnJump;
                 @Jump.canceled -= instance.OnJump;
+                @Collect.started -= instance.OnCollect;
+                @Collect.performed -= instance.OnCollect;
+                @Collect.canceled -= instance.OnCollect;
             }
 
             public void RemoveCallbacks(IPlayerLocomotionMapActions instance)
@@ -299,6 +328,7 @@ namespace AstroPlayer.FinalCharacterController
             void OnLook(InputAction.CallbackContext context);
             void OnToggleSprint(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
+            void OnCollect(InputAction.CallbackContext context);
         }
     }
 }

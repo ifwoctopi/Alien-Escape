@@ -1,18 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using AstroPlayer.FinalCharacterController;
 using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    
+   public int NumberOfArtifacts{get; private set;}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   
+
+   public void ArtifactCollected()
+   {
+      
+           NumberOfArtifacts++;
+       
+   }
 }

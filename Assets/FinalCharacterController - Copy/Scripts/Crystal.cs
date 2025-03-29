@@ -1,16 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using AstroPlayer.FinalCharacterController;
 using UnityEngine;
 
 public class Crystal : MonoBehaviour
 {
+   
+
+
    private void OnTriggerEnter(Collider other)
    {
       PlayerInventory playerInventory = other.gameObject.GetComponent<PlayerInventory>();
-
-      if (playerInventory != null)
+      PlayerState playerState = other.gameObject.GetComponent<PlayerState>();
+      print(playerState.CurrentMovementState);
+      if (playerInventory != null) //&& playerState.CurrentMovementState == PlayerMovementState.Collecting)
       {
-         playerInventory.DiamondCollected();
+         print("Crystal Collected");
+         playerInventory.ArtifactCollected();
          gameObject.SetActive(false);
       }
    }

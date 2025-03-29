@@ -19,7 +19,8 @@ namespace AstroPlayer.FinalCharacterController
             return CurrentMovementState == PlayerMovementState.Idling ||
                    CurrentMovementState == PlayerMovementState.Walking ||
                    CurrentMovementState == PlayerMovementState.Running ||
-                   CurrentMovementState == PlayerMovementState.Sprinting;
+                   CurrentMovementState == PlayerMovementState.Sprinting ||
+                   CurrentMovementState == PlayerMovementState.Collecting;
 
         }
         
@@ -32,7 +33,8 @@ namespace AstroPlayer.FinalCharacterController
         Sprinting = 3,
         Jumping = 4,
         Falling = 5,
-        Strafing = 6,
+        Collecting = 6,
+        Strafing = 7,
             
     }
     

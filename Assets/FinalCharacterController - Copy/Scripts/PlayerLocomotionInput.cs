@@ -12,13 +12,16 @@ namespace AstroPlayer.FinalCharacterController
     public class PlayerLocomotionInput : MonoBehaviour, PlayerControls.IPlayerLocomotionMapActions
     {
         [SerializeField] private bool holdToSprint = true;
+        [SerializeField] private bool holdToCollect = true;
         
         public bool SprintToggledOn { get; private set; }
+        public bool CollectToggledOn { get; private set; }
         public PlayerControls PlayerControls {get; private set;}
         
         public Vector2 MovementInput {get; private set;}
         public Vector2 LookInput {get; private set;}
         public bool JumpPressed { get; private set; }
+        public bool CollectPressed { get; private set; }
 
 
         private void OnEnable()
@@ -39,6 +42,7 @@ namespace AstroPlayer.FinalCharacterController
         private void LateUpdate()
         {
             JumpPressed = false;
+            CollectPressed = false;
         }
 
         public void OnMovement(InputAction.CallbackContext context)
@@ -71,6 +75,19 @@ namespace AstroPlayer.FinalCharacterController
                 return;
 
             JumpPressed = true;
+        }
+
+        public void OnCollect(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                CollectToggledOn = holdToCollect || !CollectToggledOn;
+                // print(SprintToggledOn);
+            }
+            else if (context.canceled)
+            {
+                CollectToggledOn = !holdToCollect && CollectToggledOn;
+            }
         }
     }
 }

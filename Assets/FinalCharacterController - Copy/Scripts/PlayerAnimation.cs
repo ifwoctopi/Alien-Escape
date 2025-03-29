@@ -19,7 +19,7 @@ namespace AstroPlayer.FinalCharacterController
      private static int isGroundedHash = Animator.StringToHash("isGrounded");
      private static int isJumpingHash = Animator.StringToHash("isJumping");
      private static int isFallingHash = Animator.StringToHash("isFalling");
-
+     private static int isCollectingHash = Animator.StringToHash("isCollecting");
      private Vector3 currentBlendInput = Vector3.zero;
 
      private void Awake()
@@ -41,18 +41,16 @@ namespace AstroPlayer.FinalCharacterController
          bool isJumping = playerState.CurrentMovementState == PlayerMovementState.Jumping;
          bool isFalling = playerState.CurrentMovementState == PlayerMovementState.Falling;
          bool isGrounded = playerState.InGroundedState();
-         
+         bool isCollecting = playerState.CurrentMovementState == PlayerMovementState.Collecting;
          animator.SetBool (isGroundedHash, isGrounded);
          animator.SetBool (isJumpingHash, isJumping);
          animator.SetBool(isFallingHash, isFalling);
-         
+         animator.SetBool(isCollectingHash, isCollecting);
          Vector2 inputTarget = isSprinting ? playerLocomotionInput.MovementInput * 1.5f : playerLocomotionInput.MovementInput;
          currentBlendInput = Vector3.Lerp(currentBlendInput, inputTarget, locomotionBlendSpeed * Time.deltaTime);
          animator.SetFloat(inputXHash, inputTarget.x);
          animator.SetFloat(inputYHash, inputTarget.y);
-         animator.SetBool (isGroundedHash, isGrounded);
-         animator.SetBool (isJumpingHash, isJumping);
-         animator.SetBool(isFallingHash, isFalling);
+         
      }
     }
     

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 namespace AstroPlayer.FinalCharacterController
@@ -27,16 +28,21 @@ namespace AstroPlayer.FinalCharacterController
         public float lookSenseV = .1f;
         public float lookLimitV = 89f;
         
+        [Header("Environment Settings")]
+        [SerializeField] private LayerMask groundLayers;
+        
         private PlayerLocomotionInput _playerLocomotionInput;
-        private PlayerState _playerState;
+        public PlayerState _playerState;
         private Vector2 cameraRotation = Vector2.zero;
         private Vector2 playerTargetRotation = Vector2.zero;
         private Vector3 _currentVelocity = Vector3.zero; // Track velocity manually
         private float verticalVelocity = 0f;
+        public int NumberOfArtifacts{get; private set;}
         private void Awake()
         {
             _playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
             _playerState = GetComponent<PlayerState>();
+            
         }
 
         private void Update()
@@ -44,6 +50,7 @@ namespace AstroPlayer.FinalCharacterController
             UpdateMovementState();
             HandleVerticalMovement();
             HandleLateralMovement();
+            ArtifactCollected();
         }
 
         private void UpdateMovementState()
@@ -52,6 +59,7 @@ namespace AstroPlayer.FinalCharacterController
             bool isMovingLaterally = IsMovingLaterally();
             bool isSprinting = _playerLocomotionInput.SprintToggledOn && isMovingLaterally;
             bool isGrounded = IsGrounded();
+            
             
             PlayerMovementState lateralState = isSprinting ? PlayerMovementState.Sprinting 
                 : isMovingLaterally || isMovementInput ? PlayerMovementState.Running : PlayerMovementState.Idling;
@@ -65,6 +73,7 @@ namespace AstroPlayer.FinalCharacterController
             {
                 _playerState.SetPlayerMovementState(PlayerMovementState.Falling);
             }
+            
         }
 
         private void HandleLateralMovement()
@@ -87,7 +96,7 @@ namespace AstroPlayer.FinalCharacterController
             _currentVelocity.y += verticalVelocity;
             characterController.Move(_currentVelocity * Time.deltaTime);
             
-            Debug.Log($"Velocity: {_currentVelocity}, MovementInput: {_playerLocomotionInput.MovementInput}");
+            //Debug.Log($"Velocity: {_currentVelocity}, MovementInput: {_playerLocomotionInput.MovementInput}");
         }
 
         private void HandleVerticalMovement()
@@ -119,13 +128,39 @@ namespace AstroPlayer.FinalCharacterController
         private bool IsMovingLaterally()
         {
             Vector3 lateralVelocity = new Vector3(_currentVelocity.x, 0f, _currentVelocity.z);
-            Debug.Log("Lateral Velocity Magnitude: " + lateralVelocity.magnitude);
+            //Debug.Log("Lateral Velocity Magnitude: " + lateralVelocity.magnitude);
             return lateralVelocity.magnitude > movingThreshold;
         }
 
         private bool IsGrounded()
         {
+            bool grounded = _playerState.InGroundedState() ? IsGroundedWhileGrounded() : isGroundedWhileAirborne();
+            
             return characterController.isGrounded;
+        }
+        private bool IsGroundedWhileGrounded()
+        {
+            Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - characterController.radius, transform.position.z);
+            
+            bool grounded = Physics.CheckSphere(spherePosition, characterController.radius, groundLayers, QueryTriggerInteraction.Ignore);
+
+            return grounded;
+        }
+
+        private bool isGroundedWhileAirborne()
+        {
+            return characterController.isGrounded;
+        }
+        
+        public void ArtifactCollected()
+        {
+            bool isCollecting = _playerLocomotionInput.CollectToggledOn;
+            if (isCollecting)
+            {
+                //print("Collecting Artifact");
+                _playerState.SetPlayerMovementState(PlayerMovementState.Collecting);
+                print(_playerState.CurrentMovementState);
+            }
         }
     }
 }
