@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Build;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace AstroPlayer.FinalCharacterController
@@ -227,6 +228,7 @@ namespace AstroPlayer.FinalCharacterController
                 //Play Death Animation
                 animator.SetTrigger("die");
                 GetComponent<Collider>().enabled = false;
+                SceneManager.LoadSceneAsync("DeathScene");
             }
             else
             {
