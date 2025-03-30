@@ -236,6 +236,34 @@ namespace AstroPlayer.FinalCharacterController
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""PlayerActionMap"",
+            ""id"": ""02ceea06-5a65-4c8d-ad0c-63ad25db0f4a"",
+            ""actions"": [
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""118e2829-1b4c-478b-888f-3af8d476de11"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""6420a341-0c18-4162-bf9a-8f8d695a554a"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -247,9 +275,15 @@ namespace AstroPlayer.FinalCharacterController
             m_PlayerLocomotionMap_ToggleSprint = m_PlayerLocomotionMap.FindAction("ToggleSprint", throwIfNotFound: true);
             m_PlayerLocomotionMap_Jump = m_PlayerLocomotionMap.FindAction("Jump", throwIfNotFound: true);
             m_PlayerLocomotionMap_Collect = m_PlayerLocomotionMap.FindAction("Collect", throwIfNotFound: true);
+<<<<<<< HEAD:Assets/FinalCharacterController - Copy - Copy/Input/PlayerControls.cs
             m_PlayerLocomotionMap_Punch1 = m_PlayerLocomotionMap.FindAction("Punch1", throwIfNotFound: true);
             m_PlayerLocomotionMap_Punch2 = m_PlayerLocomotionMap.FindAction("Punch2", throwIfNotFound: true);
             m_PlayerLocomotionMap_Kick = m_PlayerLocomotionMap.FindAction("Kick", throwIfNotFound: true);
+=======
+            // PlayerActionMap
+            m_PlayerActionMap = asset.FindActionMap("PlayerActionMap", throwIfNotFound: true);
+            m_PlayerActionMap_Attack = m_PlayerActionMap.FindAction("Attack", throwIfNotFound: true);
+>>>>>>> f7d1d5dd05682395dcea77c1f1e0d312ea31b0cd:Assets/FinalCharacterController - Copy/Input/PlayerControls.cs
         }
 
         public void Dispose()
@@ -409,6 +443,52 @@ namespace AstroPlayer.FinalCharacterController
             }
         }
         public PlayerLocomotionMapActions @PlayerLocomotionMap => new PlayerLocomotionMapActions(this);
+
+        // PlayerActionMap
+        private readonly InputActionMap m_PlayerActionMap;
+        private List<IPlayerActionMapActions> m_PlayerActionMapActionsCallbackInterfaces = new List<IPlayerActionMapActions>();
+        private readonly InputAction m_PlayerActionMap_Attack;
+        public struct PlayerActionMapActions
+        {
+            private @PlayerControls m_Wrapper;
+            public PlayerActionMapActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Attack => m_Wrapper.m_PlayerActionMap_Attack;
+            public InputActionMap Get() { return m_Wrapper.m_PlayerActionMap; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(PlayerActionMapActions set) { return set.Get(); }
+            public void AddCallbacks(IPlayerActionMapActions instance)
+            {
+                if (instance == null || m_Wrapper.m_PlayerActionMapActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_PlayerActionMapActionsCallbackInterfaces.Add(instance);
+                @Attack.started += instance.OnAttack;
+                @Attack.performed += instance.OnAttack;
+                @Attack.canceled += instance.OnAttack;
+            }
+
+            private void UnregisterCallbacks(IPlayerActionMapActions instance)
+            {
+                @Attack.started -= instance.OnAttack;
+                @Attack.performed -= instance.OnAttack;
+                @Attack.canceled -= instance.OnAttack;
+            }
+
+            public void RemoveCallbacks(IPlayerActionMapActions instance)
+            {
+                if (m_Wrapper.m_PlayerActionMapActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            public void SetCallbacks(IPlayerActionMapActions instance)
+            {
+                foreach (var item in m_Wrapper.m_PlayerActionMapActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_PlayerActionMapActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        public PlayerActionMapActions @PlayerActionMap => new PlayerActionMapActions(this);
         public interface IPlayerLocomotionMapActions
         {
             void OnMovement(InputAction.CallbackContext context);
@@ -419,6 +499,10 @@ namespace AstroPlayer.FinalCharacterController
             void OnPunch1(InputAction.CallbackContext context);
             void OnPunch2(InputAction.CallbackContext context);
             void OnKick(InputAction.CallbackContext context);
+        }
+        public interface IPlayerActionMapActions
+        {
+            void OnAttack(InputAction.CallbackContext context);
         }
     }
 }
