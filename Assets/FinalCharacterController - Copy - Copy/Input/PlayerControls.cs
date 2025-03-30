@@ -275,15 +275,12 @@ namespace AstroPlayer.FinalCharacterController
             m_PlayerLocomotionMap_ToggleSprint = m_PlayerLocomotionMap.FindAction("ToggleSprint", throwIfNotFound: true);
             m_PlayerLocomotionMap_Jump = m_PlayerLocomotionMap.FindAction("Jump", throwIfNotFound: true);
             m_PlayerLocomotionMap_Collect = m_PlayerLocomotionMap.FindAction("Collect", throwIfNotFound: true);
-<<<<<<< HEAD:Assets/FinalCharacterController - Copy - Copy/Input/PlayerControls.cs
             m_PlayerLocomotionMap_Punch1 = m_PlayerLocomotionMap.FindAction("Punch1", throwIfNotFound: true);
             m_PlayerLocomotionMap_Punch2 = m_PlayerLocomotionMap.FindAction("Punch2", throwIfNotFound: true);
             m_PlayerLocomotionMap_Kick = m_PlayerLocomotionMap.FindAction("Kick", throwIfNotFound: true);
-=======
             // PlayerActionMap
             m_PlayerActionMap = asset.FindActionMap("PlayerActionMap", throwIfNotFound: true);
             m_PlayerActionMap_Attack = m_PlayerActionMap.FindAction("Attack", throwIfNotFound: true);
->>>>>>> f7d1d5dd05682395dcea77c1f1e0d312ea31b0cd:Assets/FinalCharacterController - Copy/Input/PlayerControls.cs
         }
 
         public void Dispose()
