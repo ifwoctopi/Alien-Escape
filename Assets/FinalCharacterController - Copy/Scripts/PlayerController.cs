@@ -30,19 +30,27 @@ namespace AstroPlayer.FinalCharacterController
         
         [Header("Environment Settings")]
         [SerializeField] private LayerMask groundLayers;
+
+
+
         
         private PlayerLocomotionInput _playerLocomotionInput;
         public PlayerState _playerState;
         private Vector2 cameraRotation = Vector2.zero;
         private Vector2 playerTargetRotation = Vector2.zero;
+        private bool _jumpedLastFrame = false;
+
+
         private Vector3 _currentVelocity = Vector3.zero; // Track velocity manually
         private float verticalVelocity = 0f;
+        private float _antiBump;
         public int NumberOfArtifacts{get; private set;}
         private void Awake()
         {
             _playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
             _playerState = GetComponent<PlayerState>();
-            
+            _antiBump = sprintSpeed;
+
         }
 
         private void Update()
@@ -65,15 +73,19 @@ namespace AstroPlayer.FinalCharacterController
                 : isMovingLaterally || isMovementInput ? PlayerMovementState.Running : PlayerMovementState.Idling;
             _playerState.SetPlayerMovementState(lateralState);
 
-            if (!isGrounded && _currentVelocity.y >= 0f)
+            if ((!isGrounded || _jumpedLastFrame) && _currentVelocity.y >= 0f)
             {
                 _playerState.SetPlayerMovementState(PlayerMovementState.Jumping);
+                _jumpedLastFrame = false;
+
             }
-            else if (!isGrounded && characterController.velocity.y <= 0f)
+            else if ((!isGrounded || _jumpedLastFrame) && characterController.velocity.y <= 0f)
             {
                 _playerState.SetPlayerMovementState(PlayerMovementState.Falling);
+                _jumpedLastFrame = false;
+
             }
-            
+
         }
 
         private void HandleLateralMovement()
@@ -103,14 +115,17 @@ namespace AstroPlayer.FinalCharacterController
         {
             bool isGrounded = _playerState.InGroundedState();
 
-            if (isGrounded && verticalVelocity < 0)
-                verticalVelocity = 0f;
-            
             verticalVelocity -= gravity * Time.deltaTime;
+
+
+            if (isGrounded && verticalVelocity < 0)
+                verticalVelocity = -_antiBump;
+            
 
             if (_playerLocomotionInput.JumpPressed && isGrounded)
             {
-                verticalVelocity += Mathf.Sqrt(jumpSpeed * 3 * gravity);
+                verticalVelocity += _antiBump + Mathf.Sqrt(jumpSpeed * 3 * gravity);
+                _jumpedLastFrame = true;
             }
             
         }
@@ -138,6 +153,9 @@ namespace AstroPlayer.FinalCharacterController
             
             return characterController.isGrounded;
         }
+
+
+
         private bool IsGroundedWhileGrounded()
         {
             Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - characterController.radius, transform.position.z);
