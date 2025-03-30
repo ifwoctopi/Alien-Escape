@@ -108,19 +108,16 @@ namespace AstroPlayer.FinalCharacterController
             Vector3 cameraForwardXZ = new Vector3(_playerCamera.transform.forward.x, 0f, _playerCamera.transform.forward.z).normalized;
             Vector3 cameraRightXZ = new Vector3(_playerCamera.transform.right.x, 0f, _playerCamera.transform.right.z).normalized;
             Vector3 movementDirection = cameraRightXZ * _playerLocomotionInput.MovementInput.x + cameraForwardXZ * _playerLocomotionInput.MovementInput.y;
-<<<<<<< HEAD:Assets/FinalCharacterController - Copy - Copy/Scripts/PlayerController.cs
+
             
             Vector3 movementDelta = movementDirection * lateralAcceleration;
-=======
 
             // Project movement onto the surface normal (prevents getting stuck)
             if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1.2f, groundLayers))
             {
                 movementDirection = Vector3.ProjectOnPlane(movementDirection, hit.normal);
             }
-
-            Vector3 movementDelta = movementDirection * lateralAcceleration * Time.deltaTime;
->>>>>>> f7d1d5dd05682395dcea77c1f1e0d312ea31b0cd:Assets/FinalCharacterController - Copy/Scripts/PlayerController.cs
+            
             _currentVelocity += movementDelta;
 
             _currentVelocity *= (1f - drag * Time.deltaTime); // Apply drag smoothly
