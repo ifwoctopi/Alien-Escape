@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using AstroPlayer.FinalCharacterController;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class Crystal : MonoBehaviour
@@ -18,11 +19,10 @@ public class Crystal : MonoBehaviour
       {
          print("Crystal Collected");
          playerInventory.ArtifactCollected();
-         crystalCollected = true;
+         SceneManager.LoadSceneAsync("End Credits");
          gameObject.SetActive(false);
          
       }
-      while(crystalCollected)
-         other.GetComponent<PlayerController>().TakeDamage(5);
+     
    }
 }
