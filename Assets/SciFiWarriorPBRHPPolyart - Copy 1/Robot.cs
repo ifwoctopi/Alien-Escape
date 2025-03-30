@@ -39,7 +39,7 @@ public class Robot : MonoBehaviour
     {
         //Debug.Log($"Robot Trigger Entered with {other.gameObject.name}"); 
         if (other.CompareTag("Player") && animator.GetBool("isAttacking"))
-            other.GetComponent<PlayerController>().TakeDamage(1);
+            other.GetComponent<PlayerController>().TakeDamage(5);
         
     }
 }
