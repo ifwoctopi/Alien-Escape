@@ -839,6 +839,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1298721577632256566, guid: e912b4455f04ec44fa68dcd379a1e9e4, type: 3}
+      propertyPath: runSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1298721577632256566, guid: e912b4455f04ec44fa68dcd379a1e9e4, type: 3}
+      propertyPath: sprintSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1298721577632256566, guid: e912b4455f04ec44fa68dcd379a1e9e4, type: 3}
+      propertyPath: runAcceleration
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1298721577632256566, guid: e912b4455f04ec44fa68dcd379a1e9e4, type: 3}
+      propertyPath: sprintAcceleration
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 4345286579765708357, guid: e912b4455f04ec44fa68dcd379a1e9e4, type: 3}
       propertyPath: m_Name
       value: ThirdPersonController
