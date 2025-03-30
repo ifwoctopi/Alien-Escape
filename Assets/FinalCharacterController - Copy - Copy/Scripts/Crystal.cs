@@ -7,7 +7,7 @@ using UnityEngine;
 public class Crystal : MonoBehaviour
 {
    
-
+   public bool crystalCollected { get; private set; }
 
    private void OnTriggerEnter(Collider other)
    {
@@ -18,7 +18,11 @@ public class Crystal : MonoBehaviour
       {
          print("Crystal Collected");
          playerInventory.ArtifactCollected();
+         crystalCollected = true;
          gameObject.SetActive(false);
+         
       }
+      while(crystalCollected)
+         other.GetComponent<PlayerController>().TakeDamage(5);
    }
 }

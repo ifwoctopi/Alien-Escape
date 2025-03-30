@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class HeathBar : MonoBehaviour
 {
-    public Transform cam;
-    
-    // Update is called once per frame
-    void LateUpdate()
+    private Transform cam;
+
+    public void SetCamera(Transform cameraTransform)
     {
-        transform.LookAt(cam);
+        cam = cameraTransform;
+    }
+
+    void Update()
+    {
+        if (cam != null)
+        {
+            transform.LookAt(cam); // Example of using the camera reference
+        }
     }
 }

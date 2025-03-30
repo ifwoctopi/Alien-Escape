@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 8141548584879127498}
   - component: {fileID: 8605724970070088559}
   - component: {fileID: 8641913638112270390}
-  - component: {fileID: 4813807844598040106}
+  - component: {fileID: 8855425136675679900}
   m_Layer: 5
   m_Name: Enemy Canvas
   m_TagString: Untagged
@@ -240,7 +240,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &4813807844598040106
+--- !u!114 &8855425136675679900
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -249,10 +249,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2544644291529926896}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0c0bbdf878e7544897a127d37327d33, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e55df910753be24fa29325bd8f4eada, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
 --- !u!1 &4798538365605084084
 GameObject:
   m_ObjectHideFlags: 0
@@ -2172,7 +2171,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7072444061591351794}
   - component: {fileID: 7072444061582351952}
-  - component: {fileID: 6844544944938007675}
+  - component: {fileID: 7875951593806709393}
   - component: {fileID: 3794533791722164638}
   - component: {fileID: 3223970836262577132}
   - component: {fileID: 2534559524544925572}
@@ -2216,7 +2215,7 @@ Animator:
   m_GameObject: {fileID: 7072444061591711186}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 860793eb3324391468f1c120a75ec049, type: 3}
-  m_Controller: {fileID: 9100000, guid: 42048b119ac08574d83868039ec5ba87, type: 2}
+  m_Controller: {fileID: 9100000, guid: eb4de238510c8f24eb12a0fd131eef2c, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2227,7 +2226,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6844544944938007675
+--- !u!114 &7875951593806709393
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2236,7 +2235,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7072444061591711186}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bd824a7f31e73445a73155afefa2b6e, type: 3}
+  m_Script: {fileID: 11500000, guid: dd8c4363ccee11845b0843f460109bcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 3393261799283643672}

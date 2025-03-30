@@ -195,6 +195,7 @@ namespace AstroPlayer.FinalCharacterController
                 _playerState.SetPlayerMovementState(PlayerMovementState.Collecting);
                 print(_playerState.CurrentMovementState);
             }
+            
         }
 
         private void Fighting()
